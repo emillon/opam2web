@@ -35,7 +35,7 @@ RUN opam install odoc
 RUN git clone https://github.com/ocaml/opam --single-branch --depth 1 --branch master /home/opam/opam \
     && git -C /home/opam/opam checkout ${OPAM_GIT_SHA}
 WORKDIR /home/opam/opam
-RUN opam exec -- ./configure --without-mccs && opam exec -- make lib-ext && opam exec -- make
+RUN opam exec -- ./configure --with-vendored-deps --without-mccs && opam exec -- make lib-ext && opam exec -- make
 RUN echo '(vendored_dirs src_ext)' >> dune
 RUN opam exec -- make -C doc html man-html DUNE=dune
 RUN sudo mkdir -p /opt/opam/doc && sudo chown -R opam:opam /opt/opam
